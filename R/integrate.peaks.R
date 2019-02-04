@@ -28,8 +28,8 @@ integrate.peaks <- function(my.data='', blank = NULL, nups.451=10, nups.223=20){
   library('pracma')
   library('shiny')
   library('plotly')
-  source('./R/integrate.peaks.R')
-  source('./R/identify.peaks.R')
+  #source('./R/integrate.peaks.R')
+  #source('./R/identify.peaks.R')
   source('./R/mobile_reference_construction.R')
 
   #load in data and organise columns, add a 'time' column
