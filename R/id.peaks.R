@@ -1,4 +1,4 @@
-#'@title identify.peaks
+#'@title id.peaks
 #'@description identify peaks in output of EXPORT3D.mac for ChemStation hplc data
 #'@param my.data character string name or filepath and name of the CSV containing the original data
 #'@param nups.451 number of ups to define peak at 451 nm (can be altered if peaks not captured correctly)
@@ -6,7 +6,7 @@
 #'@return SQLite database in current working directory updated to output of integrate.peaks() with designated peak identifications determined during interactive peak ID shinyApp.
 #'@export
 
-identify.peaks <- function(my.data = '', nups.451=10, nups.223=20){
+id.peaks <- function(my.data = '', nups.451=10, nups.223=20){
 
   #access database made in integrate.peaks() for all info needed here
   if(my.data %in% dir()){

@@ -28,7 +28,7 @@ The user must decide a minimum peak height to integrate (i.e. select all peaks t
 
 ###2. Peak Identification
 ####A. Identification must take into consideration BOTH the peak absorbance spectra (and thus match to library) AND the peak retention time:
-Many pigments have extremely similar absorbance spectra and so can only really be differentiated using both this and their retention time in the HPLC column, i.e. at what time during the run the pigment appears on the chromatograph. It is very important to rely on both of these attributes to determine the peak ID. In the function `identify.peaks()` there are two sliding bars to set thresholds to help in this ID process, but these will not get the proper ID for all pigments (hence we need a user driven pigment ID step). After working with a few samples you will get an idea of which order you expect pigments to appear on the chromatograph. To aid in this, green points are shown along the x-axis (hover mouse over them to see which pigment they represent) to give a rough guide of which peak should be where. These points are derived from one mixed standard pigment sample and therefore retention times will differ to your sample peaks (they'll usually be slightly later than the peaks in your sample, particularly earlier on in the chromatograph) but they should work as a guide nonetheless. The important point here is DONT BELIEVE A PEAK ID IF THE RETENTION TIME IS WAY OFF. 
+Many pigments have extremely similar absorbance spectra and so can only really be differentiated using both this and their retention time in the HPLC column, i.e. at what time during the run the pigment appears on the chromatograph. It is very important to rely on both of these attributes to determine the peak ID. In the function `id.peaks()` there are two sliding bars to set thresholds to help in this ID process, but these will not get the proper ID for all pigments (hence we need a user driven pigment ID step). After working with a few samples you will get an idea of which order you expect pigments to appear on the chromatograph. To aid in this, green points are shown along the x-axis (hover mouse over them to see which pigment they represent) to give a rough guide of which peak should be where. These points are derived from one mixed standard pigment sample and therefore retention times will differ to your sample peaks (they'll usually be slightly later than the peaks in your sample, particularly earlier on in the chromatograph) but they should work as a guide nonetheless. The important point here is DONT BELIEVE A PEAK ID IF THE RETENTION TIME IS WAY OFF. 
 
 #### B. There are numerous peaks we cant identify:
 Linked with the above, there will be several peaks (typcailly small and bad absorbance spectra) in all chromatographs that cannot be identified. These 'peaks' may be artefacts due to bad separation on the column, may be isomers of known pigments, pigment break-down products, or actual unique pigments that i) are not in our library and so we cant identify them yet, ii) are unknown generally. In some cases these peaks will be almost perfect spectral matches to a known pigment in our library, but appear on the chromatograph at completely the wrong time (and out of order) and thus are not the pigment we have spectrally identified them as. In the case that there is a re-occurring peak across several samples that we cant identify, literature searches can often serve to provide an estimate of their ID. 
@@ -45,7 +45,7 @@ magrittr, dplyr, dbplyr, RSQLite, alsace, Peaks, pracma, ggplot2, gridExtra, shi
 The `ProcessHplc` package has 4 functions:  
 
 1. `integrate.peaks()`  
-2. `identify.peaks()`  
+2. `id.peaks()`  
 3. `view.database()`  
 4. `calculate.concs()`
 
@@ -60,7 +60,7 @@ The function will launch an interactive html window showing the main chromatogra
 When you have decided on the desired threshold, click the `Finished` button.  
 This function will produce a database with the same name as the sample name in your current working directory. This database will contain numerous datatables (see `view.database()` function for how to navigate these tables if desired).
 
-###2. `identify.peaks()`
+###2. `id.peaks()`
 The purpose of this function is to decide on the identity of the peaks integrated based on the `integrate.peaks()` function.  
 This function requrires the name of the sample CSV file (a character string of the file name if in working directory, or path to file). NB. though we provide the name of the sample CSV file, really this function is drawing on the database produced by the `integrate.peaks()` function and so do not change the database location inbetween calling the two functions.
 
@@ -82,10 +82,10 @@ When you are happy with all peak identification, select the `Finished` button in
 This function will update the database that was initially made by `integrate.peaks()`. In particular, this database will contain tables called integrated.223, integrated.431 and integrated.451 that will contain 'final_id' columns which reflect the identifications estalished during the interactive session. 
 
 ###3. `view.database()`
-The purpose of this function is to quickly show the contents of databases produced by the `integrate.peaks()` and `identify.peaks()` functions. It takes the database name as a character string and opens a simple interactive html window to navigate through the databases. Note, this can easily be done within R using functions of the `dbplyr` and `RSQ_Lite` packages.
+The purpose of this function is to quickly show the contents of databases produced by the `integrate.peaks()` and `id.peaks()` functions. It takes the database name as a character string and opens a simple interactive html window to navigate through the databases. Note, this can easily be done within R using functions of the `dbplyr` and `RSQ_Lite` packages.
 
 ###4. `calculate.concs()` NOT INITIATED
-This function will calculate the concentration of pigments integrated and identified using the functions `integrate.peaks()` and `identify.peaks()` by taking i) a database with integration information, ii) standard curve coefficients for all pigments, iii) filtration and extraction volumes for each sample.
+This function will calculate the concentration of pigments integrated and identified using the functions `integrate.peaks()` and `id.peaks()` by taking i) a database with integration information, ii) standard curve coefficients for all pigments, iii) filtration and extraction volumes for each sample.
 
 This functions is not yet initiated in this package, but will be once I have converted my original script into a shinyApp representation.
 
