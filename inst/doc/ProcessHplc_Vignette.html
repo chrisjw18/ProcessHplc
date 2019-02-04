@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>ProcessHplc Vignette</title>
+
+
+
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">ProcessHplc Vignette</h1>
+
+
+
+<div id="processhplc-package" class="section level2">
+<h2>ProcessHplc Package</h2>
+<p>This is a package written to process the raw CSV output from ChemStation of HPLC pigment runs generated by the ChemStation macro Export3D.mac.</p>
+<p>This macro places a <code>DAD1.CSV</code> file in the ChemStation directory of the respective sample that contains the absorbance values for all wavelengths examined, for all time points during the run.</p>
+<p>This package will process <code>DAD1.CSV</code> files to i) integrate the desired peaks, ii) correctly identify the integrated peaks, iii) quantify the concentration of identified pigments [currently not initiated] and iv) produce a database containing all of this information for each sample along with all absorbance data from the hplc run.</p>
+<p>This package has been mainly developed using ShinyApp to allow the user to interactively work with the functions and to process their data.</p>
+</div>
+<div id="golden-rules-of-hplc-data-processing" class="section level2">
+<h2>Golden rules of HPLC data processing</h2>
+<div id="peak-integration" class="section level3">
+<h3>1. Peak Integration</h3>
+<p>The user must decide a minimum peak height to integrate (i.e. select all peaks that meet this minimum height). This is done here interactively when the <code>integrate.peaks()</code> function is called. The trick to this is to set the threshold low enough to select all peaks of interest, but not too low that every tiny bump on the chromatograph is integrated. There is usually a trade-off, whereby some non-true-peak features are integrated when we set the threshold low enough to make sure we capture all peaks of interest.</p>
+</div>
+<div id="peak-identification" class="section level3">
+<h3>2. Peak Identification</h3>
+<div id="a.-identification-must-take-into-consideration-both-the-peak-absorbance-spectra-and-thus-match-to-library-and-the-peak-retention-time" class="section level4">
+<h4>A. Identification must take into consideration BOTH the peak absorbance spectra (and thus match to library) AND the peak retention time:</h4>
+<p>Many pigments have extremely similar absorbance spectra and so can only really be differentiated using both this and their retention time in the HPLC column, i.e. at what time during the run the pigment appears on the chromatograph. It is very important to rely on both of these attributes to determine the peak ID. In the function <code>identify.peaks()</code> there are two sliding bars to set thresholds to help in this ID process, but these will not get the proper ID for all pigments (hence we need a user driven pigment ID step). After working with a few samples you will get an idea of which order you expect pigments to appear on the chromatograph. To aid in this, green points are shown along the x-axis (hover mouse over them to see which pigment they represent) to give a rough guide of which peak should be where. These points are derived from one mixed standard pigment sample and therefore retention times will differ to your sample peaks (they’ll usually be slightly later than the peaks in your sample, particularly earlier on in the chromatograph) but they should work as a guide nonetheless. The important point here is DONT BELIEVE A PEAK ID IF THE RETENTION TIME IS WAY OFF.</p>
+</div>
+<div id="b.-there-are-numerous-peaks-we-cant-identify" class="section level4">
+<h4>B. There are numerous peaks we cant identify:</h4>
+<p>Linked with the above, there will be several peaks (typcailly small and bad absorbance spectra) in all chromatographs that cannot be identified. These ‘peaks’ may be artefacts due to bad separation on the column, may be isomers of known pigments, pigment break-down products, or actual unique pigments that i) are not in our library and so we cant identify them yet, ii) are unknown generally. In some cases these peaks will be almost perfect spectral matches to a known pigment in our library, but appear on the chromatograph at completely the wrong time (and out of order) and thus are not the pigment we have spectrally identified them as. In the case that there is a re-occurring peak across several samples that we cant identify, literature searches can often serve to provide an estimate of their ID.</p>
+</div>
+<div id="c.-different-pigments-are-assessed-at-different-wavelengths" class="section level4">
+<h4>C. Different pigments are assessed at different wavelengths:</h4>
+<p>The functions in this package focus on wavelenths 223nm, 431nm and 451nm given the pigments of interest. Vitamin E [internal extraction standard] is assessed here at wavelength 223nm. Chlorophylls are assessed at 431 nm. All other pigments are assessed at 451 nm. This allows to assess peak area for calculation of pigment concentations at lambda max of respective pigment groups. For this reason, there are 3 different wavelengths to identify peaks across, BUT, at 223 nm it is only important that the vitamin E peak is correctly identified, at 431 nm it is only important that the chlorophyll peaks are correctly identified, where as 451nm all other peaks must be identified correctly. Hence most of the work will be done at this wavelength.</p>
+</div>
+</div>
+</div>
+<div id="package-functions" class="section level2">
+<h2>Package Functions</h2>
+<p>Loading the package <code>ProcessHplc</code> should load (and install if not already present) all dependencies. This process is not always smooth and some packages (particularly ‘alsace’) may need manual installation prior to using the <code>ProcessHplc</code> package.</p>
+<p>Required packages include: magrittr, dplyr, dbplyr, RSQLite, alsace, Peaks, pracma, ggplot2, gridExtra, shiny, plotly, knitr, rmarkdown</p>
+<p>The <code>ProcessHplc</code> package has 4 functions:</p>
+<ol style="list-style-type: decimal">
+<li><code>integrate.peaks()</code><br />
+</li>
+<li><code>identify.peaks()</code><br />
+</li>
+<li><code>view.database()</code><br />
+</li>
+<li><code>calculate.concs()</code></li>
+</ol>
+<div id="integrate.peaks" class="section level3">
+<h3>1. <code>integrate.peaks()</code></h3>
+<p>The purpose of this function is to decide a threshold of minimum peak height to integrate. As noted previously, this is a trade-off between integrating peaks of interest and avoiding noise.</p>
+<p>The function requires the name of the sample CSV file (a character string of the file name if in working directory, or path to file) and the name of a blank CSV file completed in the same run as your sample (a character strong of the file name if in working directory, or path to file). If the blank file is not provided an integrated blank file is used in the blanking process, but this does not produce good results.</p>
+<p>The function will launch an interactive html window showing the main chromatograph at 451 nm with a slider input to change the minimum peak height threshold. As the slider is changed the number of peaks integrated (and thus labelled on the plot) will iteratively change. NB, this plot is interactive, i.e. can be zoomed etc if required.</p>
+<p>When you have decided on the desired threshold, click the <code>Finished</code> button.<br />
+This function will produce a database with the same name as the sample name in your current working directory. This database will contain numerous datatables (see <code>view.database()</code> function for how to navigate these tables if desired).</p>
+</div>
+<div id="identify.peaks" class="section level3">
+<h3>2. <code>identify.peaks()</code></h3>
+<p>The purpose of this function is to decide on the identity of the peaks integrated based on the <code>integrate.peaks()</code> function.<br />
+This function requrires the name of the sample CSV file (a character string of the file name if in working directory, or path to file). NB. though we provide the name of the sample CSV file, really this function is drawing on the database produced by the <code>integrate.peaks()</code> function and so do not change the database location inbetween calling the two functions.</p>
+<p>The function will launch an interactive html window. In the top left you have a drop down menu to choose between the 223nm, 431nm or 451nm chromatograph plots. These plots (top right panel) show i) the chromatograph at respective wavelengths, ii) orange points to show the identity of peaks for which the identity is ‘known’ (See below); hover over these points to show the pigment name, iii) green points showing the rough reference position of known pigments; hover over these points to show the pigment name.</p>
+<p>In the second row, there are two sliders used to determine two different thresholds to aid in automatic identification of peaks (fit_threshold and fit_norm_threhold). The <code>fit_threshold</code> refers to the R<sup>2</sup> value of a linear regression between your peak and a pigment library. It is bounded 0 - 1. By changing this slider, you are changing the R<sup>2</sup> value at which you accept a match between your peak and a given entry in the library. The <code>fit_norm_threshold</code> incorporates both the spectral match and a weighed match based on comparisions of retention times between your peak and a pigment library. It is not bounded. As you reduce the thresholds of these two sliders, you should see more peaks gain orange points on your chromatograph, indicating these have been ‘automatically identified’. Two important points i) if no peaks are identified based on these thresholds, an orange line will show in upper chromatograph, ii) the identification of these peaks MUST be checked as automatic identification is typically only ~ 70% correct, hence the user interface. The automation is provided here to effectively speed-up user peak identification but should not be used as a true peak identification tool.</p>
+<p>The third row gives you the opportunity to check and amend your peak IDs. It shows the absorbance spectra for the peak selected (left panel drop down menu), including the absorbance spectra for the best match (223 nm), or top three best matches (431nm and 451nm) to your peak from the library. The Current Peak ID will be displayed in the left panel.<br />
+The user should examine the absorbance spectra of their peak (blue line), and compare it to the matches shown in the plot (NB the plot is interactive for i) zooming, ii) selecting/deselecting different lines by clicking on their legend entry, iii) hovering over best matches traces to view their pigment ID and fit thresholds).<br />
+To amend the ID of a peak, i) click the <code>Amend Peak ID?</code> button, ii) select from the top 3 best matches from the library, unknown, or other (which will show a list of all pigments in the library), iii) confirm ID amendment by clicking <code>Confirm Peak Amendment</code> box.<br />
+To show the absorbance spectra of another pigment on the right hand plot, click <code>Add trace</code> button and select the pigment from the dropdown menu that appears.</p>
+<p>The user should use this function to i) check the vitamin E peak is identified correctly in 231 nm view [if internal extraction standard used], ii) check that chlorophyll peaks are correctly identified in 431 nm view [dont worry about the ID of any other peaks at this wavelength], iii) check that all other peaks are corectly identified in 451 nm view. The majority of the work will be in 451 nm view. <strong>If the identity of a peak is not known, it must be set to ‘unknown’ if not already so</strong>.</p>
+<p>When you are happy with all peak identification, select the <code>Finished</code> button in the top left panel.</p>
+<p>This function will update the database that was initially made by <code>integrate.peaks()</code>. In particular, this database will contain tables called integrated.223, integrated.431 and integrated.451 that will contain ‘final_id’ columns which reflect the identifications estalished during the interactive session.</p>
+</div>
+<div id="view.database" class="section level3">
+<h3>3. <code>view.database()</code></h3>
+<p>The purpose of this function is to quickly show the contents of databases produced by the <code>integrate.peaks()</code> and <code>identify.peaks()</code> functions. It takes the database name as a character string and opens a simple interactive html window to navigate through the databases. Note, this can easily be done within R using functions of the <code>dbplyr</code> and <code>RSQ_Lite</code> packages.</p>
+</div>
+<div id="calculate.concs-not-initiated" class="section level3">
+<h3>4. <code>calculate.concs()</code> NOT INITIATED</h3>
+<p>This function will calculate the concentration of pigments integrated and identified using the functions <code>integrate.peaks()</code> and <code>identify.peaks()</code> by taking i) a database with integration information, ii) standard curve coefficients for all pigments, iii) filtration and extraction volumes for each sample.</p>
+<p>This functions is not yet initiated in this package, but will be once I have converted my original script into a shinyApp representation.</p>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
