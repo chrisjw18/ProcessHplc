@@ -78,8 +78,8 @@ integrate.peaks <- function(my.data='', blank = NULL, nups.451=10, nups.223=20){
 
   #run mobile_reference_construction function on blank data
   blank <- mobile_reference_construction(blank)
-  #fix to catch difference (1 row) between blank dataset and sample data sets
-  blank <- blank[1:nrow(dat), ]
+  #fix to catch difference (1 row) between blank dataset and sample data sets - best to cut off last row from dat rather than blank! As this can lead to NAs if we potentially add a row to the blank dataset!
+  dat <- dat[1:nrow(blank),]
 
   #add blank to main database
   copy_to(mydb, name='mobile_phase_reference_spectra', df = blank, temporary=F, overwrite=T)
@@ -150,7 +150,7 @@ integrate.peaks <- function(my.data='', blank = NULL, nups.451=10, nups.223=20){
                  sliderInput('min.451.height',
                              'Min 451 nm Height',
                              min = 0,
-                             max = round(max(dat$X451_final_corrected)*0.2,0),
+                             max = round(max(dat$X451_final_corrected, na.rm = T)*0.2,0),
                              value = 10,
                              step = 0.1)
                )#end of wellPanel
