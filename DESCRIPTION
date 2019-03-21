@@ -10,5 +10,5 @@ Encoding: UTF-8
 LazyData: true
 Imports: magrittr, dplyr, dbplyr, RSQLite, alsace, Peaks, pracma, ggplot2, gridExtra, shiny, plotly, knitr, rmarkdown
 VignetteBuilder: knitr
-Collate: 'id.peaks.R' 'integrate.peaks.R' 'mobile_reference_construction.R' 'view.database.R'
+Collate: 'id.peaks.R' 'integrate.peaks.R' 'mobile_reference_construction.R' 'view.database.R' 'correct.conc.R'
 RoxygenNote: 6.1.1
